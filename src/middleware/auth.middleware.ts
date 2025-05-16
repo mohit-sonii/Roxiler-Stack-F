@@ -25,14 +25,20 @@ export const middleware = async (req: Request, res: Response, next: NextFunction
                 role: true
             }
         })
+        const strRole = role as string
+
         if (req.originalUrl.startsWith("/a")) {
 
-            if (!foundUser || (foundUser.role !== "ADMIN" && role !== "ADMIN")) return;
+            if (!foundUser || (foundUser.role.toString() !== "ADMIN" && strRole !== "ADMIN")) return;
             next()
         } else if (req.originalUrl.startsWith("/u")) {
-            if (!foundUser || (foundUser.role !== "USER" && role !== "USER")) return;
+            if (!foundUser || (foundUser.role.toString() !== "USER" && strRole !== "USER")) return;
             next();
-        } else {
+        } else if (req.originalUrl.startsWith("/o")) {
+            if (!foundUser || (foundUser.role.toString() !== "OWNER" && strRole !== "OWNER")) return;
+            next();
+        } 
+        else {
             res.status(400).json({ status: 400, message: "UnExpected Route" })
             return
         }
