@@ -8,3 +8,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+
+enum Role{
+  USER
+  ADMIN
+  OWNER
+}
+
+model Users{
+  id String @id @default(uuid())
+  name String @db.VarChar(60)
+  email String @unique
+  address String
+  password String
+  role Role @default(USER)
+  stores Store[] @relation("owner")
+  ratings Rating[]
+}
+
+model Rating{
+  id String @id @default(uuid())
+  rating Int
+  userId String
+  user Users @relation(fields: [userId],references: [id])
+  storeId String
+  store Store @relation(fields: [storeId],references: [id])
+
+}
+
+model Store{
+  id String @id @default(uuid())
+  name String
+  address String
+  email String 
+  ownerId String
+  owner Users @relation("owner",fields: [ownerId],references: [id])
+  ratings Rating[]
+}
