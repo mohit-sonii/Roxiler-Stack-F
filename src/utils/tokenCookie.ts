@@ -4,8 +4,7 @@ import jwt from 'jsonwebtoken'
 import { Role } from '@prisma/client'
 import { Request, Response } from 'express'
 import { prisma } from '../client'
-
-const secretKey = process.env.TOKEN_SECRET || "JavaMohistOOPSLearnCodingNodejsPythonFlaskRustRuby"
+import { secretKey } from './Key'
 
 
 export const generateToken = (id: string, role: string, res: Response, req: Request) => {
@@ -36,7 +35,7 @@ export const validateToken = (token: string): boolean => {
     const {id} = result
     const userWithId = prisma.users.findFirst({
         where:{
-            id:id
+            user_id:id
         },
         select:{
             role:true

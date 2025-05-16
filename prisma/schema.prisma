@@ -16,7 +16,7 @@ enum Role{
 }
 
 model Users{
-  id String @id @default(uuid())
+  user_id String @id @default(uuid()) @map("id")
   name String @db.VarChar(60)
   email String @unique
   address String
@@ -27,21 +27,22 @@ model Users{
 }
 
 model Rating{
-  id String @id @default(uuid())
+  rating_id String @id @default(uuid()) @map("id")
   rating Int
   userId String
-  user Users @relation(fields: [userId],references: [id])
+  user Users @relation(fields: [userId],references: [user_id])
   storeId String
-  store Store @relation(fields: [storeId],references: [id])
+  store Store @relation(fields: [storeId],references: [store_id])
 
+@@unique([userId,storeId])
 }
 
 model Store{
-  id String @id @default(uuid())
+  store_id String @id @default(uuid()) @map("id")
   name String
   address String
   email String 
   ownerId String
-  owner Users @relation("owner",fields: [ownerId],references: [id])
+  owner Users @relation("owner",fields: [ownerId],references: [user_id])
   ratings Rating[]
 }
