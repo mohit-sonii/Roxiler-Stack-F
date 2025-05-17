@@ -83,7 +83,7 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
         }
         if (await bcrypt.compare(password, foundUser.password)) {
             generateToken(foundUser.user_id, "USER", res, req);
-            res.status(200).json({ status: 200, message: "User Authenticated" })
+            res.status(200).json({ status: 200, data:foundUser.user_id,message: "User Authenticated" })
             return
         } else {
             res.status(401).json({ status: 401, message: "Incorrect email or password" })
@@ -137,7 +137,7 @@ export const viewListedStore = async (req: Request, res: Response): Promise<void
                 }
             }
         })
-        res.status(200).json({ status: 200, stores })
+        res.status(200).json({ status: 200, data:stores })
         return
     } catch (error) {
         res.status(500).json({ status: 500, message: "Unexpected Server Error" })

@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import bcrypt from 'bcrypt'
 import { prisma } from "../client";
 import { Role } from "@prisma/client";
-import { json } from "stream/consumers";
 
 export const dashboardDisplayCounts = async (req: Request, res: Response): Promise<void> => {
     try {
