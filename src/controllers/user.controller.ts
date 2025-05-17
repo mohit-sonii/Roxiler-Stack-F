@@ -130,6 +130,7 @@ export const viewListedStore = async (req: Request, res: Response): Promise<void
             select: {
                 store_id: true,
                 name: true,
+                address:true,
                 owner: {
                     select: {
                         name: true
