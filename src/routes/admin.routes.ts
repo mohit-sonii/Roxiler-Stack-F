@@ -7,7 +7,7 @@ import {addStore, dashboardDisplayCounts, listOfStore, listOfUser} from "../cont
 const router = Router()
 
 router.route("/logout").get(middleware,logout)
-router.route("/register-user").post(middleware,registerUser)
+router.route("/register").post(middleware,registerUser)
 router.route("/dashboard/counts").get(middleware,dashboardDisplayCounts)
 router.route("/addStore").post(middleware,addStore)
 router.route("/list/store").get(middleware,listOfStore)

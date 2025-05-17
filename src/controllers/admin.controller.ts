@@ -101,7 +101,12 @@ export const listOfStore = async (req: Request, res: Response): Promise<void> =>
                     address: true,
                     ratings: {
                         select: {
-                            rating: true
+                            rating: true,
+                            user: {
+                                select: {
+                                    name: true
+                                }
+                            }
                         }
                     }
                 }
@@ -115,6 +120,16 @@ export const listOfStore = async (req: Request, res: Response): Promise<void> =>
                     }
                 },
                 select: {
+                    ratings: {
+                        select: {
+                            rating: true,
+                            user: {
+                                select: {
+                                    name: true
+                                }
+                            }
+                        }
+                    },
                     name: true,
                     address: true,
                     email: true
