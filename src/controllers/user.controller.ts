@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { generateToken, JWT, validateToken } from "../utils/tokenCookie";
 import { secretKey } from "../utils/Key";
+import { Role } from "@prisma/client";
 
 
 export const registerUser = async (req: Request, res: Response): Promise<void> => {
@@ -28,15 +29,16 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
         }
         const hashedPassword = await bcrypt.hash(rest.password, 10);
 
-        const newUser = await prisma.users.create({
+        await prisma.users.create({
             data: {
                 name: rest.username,
                 email: rest.email,
                 address: rest.address,
-                password: hashedPassword
+                password: hashedPassword,
+                role:rest.role as Role
             }
         })
-        generateToken(newUser.user_id, "USER", res, req);
+        // generateToken(newUser.user_id, "USER", res, req);
 
         res.status(201).json({ status: 201, message: "User Created Successfully" })
         return
